@@ -1,6 +1,8 @@
 Assisted Injection for Android ViewModels
 =========================================
 
+This library is based on and depends heavily on https://github.com/square/AssistedInject
+
 License
 =======
 

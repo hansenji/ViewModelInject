@@ -1,3 +1,6 @@
+// TODO: 3/29/19 REMOVE WHEN https://github.com/square/AssistedInject/pull/90 is resolved
+
+
 package com.vikingsen.inject.viewmodel.processor.internal
 
 import com.squareup.inject.assisted.processor.internal.toClassName
