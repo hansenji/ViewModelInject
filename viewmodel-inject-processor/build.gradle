@@ -1,0 +1,35 @@
+import org.gradle.internal.jvm.Jvm
+
+apply plugin: 'java-library'
+apply plugin: 'org.jetbrains.kotlin.jvm'
+apply plugin: 'org.jetbrains.kotlin.kapt'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+dependencies {
+    implementation project(':viewmodel-inject-annotations')
+    implementation deps.assistedInject
+    implementation deps.assistedInjectProcessor
+    implementation deps.kotlin
+    implementation deps.javaPoet
+
+    compileOnly deps.autoService
+    compileOnly deps.guava
+    kapt deps.autoService
+    kapt deps.guava
+
+    testImplementation deps.junit
+    testImplementation deps.truth
+    testImplementation deps.compileTesting
+    testImplementation deps.dagger
+    testImplementation deps.guava
+    testImplementation deps.guavaAndroid
+    testImplementation files(Jvm.current().getToolsJar())
+    testCompileOnly project(':viewmodel-inject-stubs')
+
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.1'
+}
+
+//kapt.includeCompileClasspath = false

@@ -1,0 +1,2 @@
+include ':sample', ':viewmodel-inject', ':viewmodel-inject-processor', ':viewmodel-inject-annotations', ':viewmodel-inject-stubs'
+rootProject.name='ViewModelInject'
