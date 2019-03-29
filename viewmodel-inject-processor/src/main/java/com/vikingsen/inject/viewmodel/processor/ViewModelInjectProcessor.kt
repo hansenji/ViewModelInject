@@ -223,7 +223,7 @@ class ViewModelInjectProcessor : AbstractProcessor() {
         if (!valid) return null
 
         val targetType = targetType.asType().toTypeName()
-        val generatedAnnotation = createGeneratedAnnotation(elements)
+        val generatedAnnotation = createGeneratedAnnotation(elements, "https://github.com/hansenji/ViewModelInject")
         return if (assistedKeys.isEmpty()) {
             val factory = ParameterizedTypeName.get(BASIC_FACTORY, targetType)
             AssistedInjection(targetType, requests, factory, "create", targetType, emptyList(), generatedAnnotation)
@@ -271,7 +271,7 @@ class ViewModelInjectProcessor : AbstractProcessor() {
         val moduleName = moduleType.toClassName()
         val inflationNames = viewModelTypes.map { it.toClassName() }
         val public = Modifier.PUBLIC in moduleType.modifiers
-        val generatedAnnotation = createGeneratedAnnotation(elements)
+        val generatedAnnotation = createGeneratedAnnotation(elements, "https://github.com/hansenji/ViewModelInject")
         return ViewModelInjectionModule(moduleName, public, inflationNames, generatedAnnotation)
     }
 
