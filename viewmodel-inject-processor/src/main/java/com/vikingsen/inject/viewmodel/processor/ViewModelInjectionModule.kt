@@ -6,7 +6,6 @@ import com.squareup.inject.assisted.processor.internal.peerClassWithReflectionNe
 import com.squareup.javapoet.AnnotationSpec
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.MethodSpec
-import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeSpec
 import javax.lang.model.element.Modifier.ABSTRACT
 import javax.lang.model.element.Modifier.PRIVATE
@@ -58,7 +57,7 @@ data class ViewModelInjectionModule(
                                 .build()
                         )
                         .addModifiers(ABSTRACT)
-                        .returns(ParameterizedTypeName.get(ABSTRACT_FACTORY, injectedName))
+                        .returns(ABSTRACT_FACTORY)
                         .addParameter(injectedName.assistedInjectFactoryName(), "factory")
                         .build()
                 )

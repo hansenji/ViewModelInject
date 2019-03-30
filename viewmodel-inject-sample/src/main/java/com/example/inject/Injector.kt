@@ -5,7 +5,7 @@ object Injector {
 
     @Synchronized
     fun init() {
-//        appComponent = DaggerAppComponent.create()
+        appComponent = DaggerAppComponent.create()
     }
 
     @Synchronized

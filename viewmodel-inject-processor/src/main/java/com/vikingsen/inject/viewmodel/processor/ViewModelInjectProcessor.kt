@@ -72,7 +72,7 @@ class ViewModelInjectProcessor : AbstractProcessor() {
     }
 
     override fun process(annotations: Set<TypeElement>, roundEnv: RoundEnvironment): Boolean {
-         val viewModelInjectElements = roundEnv.findViewModelInjectCandidateTypeElements()
+        val viewModelInjectElements = roundEnv.findViewModelInjectCandidateTypeElements()
             .mapNotNull { it.toViewModelInjectElementsOrNull() }
 
         viewModelInjectElements

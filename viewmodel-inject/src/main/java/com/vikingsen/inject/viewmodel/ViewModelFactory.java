@@ -10,10 +10,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
-    private final Map<Class<?>, AbstractViewModelFactory<? extends ViewModel>> factories;
+    private final Map<Class<?>, AbstractViewModelFactory> factories;
 
     @Inject
-    public ViewModelFactory(@NonNull Map<Class<?>, AbstractViewModelFactory<? extends ViewModel>> factories) {
+    public ViewModelFactory(@NonNull Map<Class<?>, AbstractViewModelFactory> factories) {
         if (factories == null) throw new NullPointerException("factories == null");
         this.factories = factories;
     }

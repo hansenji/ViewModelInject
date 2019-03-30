@@ -18,9 +18,9 @@ import androidx.savedstate.SavedStateRegistryOwner;
 
 public class SavedStateViewModelFactory extends AbstractSavedStateVMFactory {
 
-    private final Map<Class<?>, AbstractViewModelFactory<? extends ViewModel>> factories;
+    private final Map<Class<?>, AbstractViewModelFactory> factories;
 
-    SavedStateViewModelFactory(@NonNull Map<Class<?>, AbstractViewModelFactory<? extends ViewModel>> factories, @NonNull SavedStateRegistryOwner owner, @Nullable Bundle defaultArgs) {
+    private SavedStateViewModelFactory(@NonNull Map<Class<?>, AbstractViewModelFactory> factories, @NonNull SavedStateRegistryOwner owner, @Nullable Bundle defaultArgs) {
         super(owner, defaultArgs);
         this.factories = factories;
     }
@@ -60,10 +60,10 @@ public class SavedStateViewModelFactory extends AbstractSavedStateVMFactory {
     }
 
     public static class Factory {
-        private final Map<Class<?>, AbstractViewModelFactory<? extends ViewModel>> factories;
+        private final Map<Class<?>, AbstractViewModelFactory> factories;
 
         @Inject
-        public Factory(@NonNull Map<Class<?>, AbstractViewModelFactory<? extends ViewModel>> factories) {
+        public Factory(@NonNull Map<Class<?>, AbstractViewModelFactory> factories) {
             if (factories == null) throw new NullPointerException("factories == null");
             this.factories = factories;
         }
