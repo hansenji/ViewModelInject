@@ -33,13 +33,6 @@ dependencies {
     implementation deps.dagger
     kapt deps.daggerCompiler
 
-
-    compileOnly deps.assistedInject
-    kapt deps.assistedInjectCompiler
-
     implementation project(':viewmodel-inject')
     kapt project(':viewmodel-inject-processor')
-
-//    implementation project(':inflation-inject')
-//    kapt project(':inflation-inject-processor')
 }
