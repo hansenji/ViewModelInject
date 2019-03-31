@@ -38,6 +38,8 @@ dependencies {
     testImplementation deps.junit
     testImplementation deps.robolectric
     testImplementation deps.android
+    testImplementation deps.viewModel
+    testImplementation deps.viewModelSavedState
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

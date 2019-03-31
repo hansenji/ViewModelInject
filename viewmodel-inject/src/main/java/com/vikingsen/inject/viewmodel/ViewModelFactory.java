@@ -1,5 +1,7 @@
 package com.vikingsen.inject.viewmodel;
 
+import com.vikingsen.inject.viewmodel.savedstate.ViewModelSavedStateFactory;
+
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -32,14 +34,16 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             }
         }
         if (factory != null) {
-            try {
-                if (factory instanceof ViewModelBasicFactory) {
+            if (factory instanceof ViewModelBasicFactory) {
+                try {
                     return (T) ((ViewModelBasicFactory) factory).create();
-                } else {
-                    throw new IllegalStateException("Invalid Factory Type " + factory.getClass());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            } else if (factory instanceof ViewModelSavedStateFactory) {
+                throw new IllegalStateException("ViewModels with a SavedStateHandle must use a SavedStateViewModelFactory");
+            } else {
+                throw new IllegalStateException("Invalid Factory Type " + factory.getClass());
             }
         }
         throw new IllegalStateException("Unknown model class " + modelClass.getName());

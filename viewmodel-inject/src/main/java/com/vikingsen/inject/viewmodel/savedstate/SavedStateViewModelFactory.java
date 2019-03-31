@@ -38,11 +38,7 @@ public class SavedStateViewModelFactory extends AbstractSavedStateVMFactory {
             }
         }
         if (factory != null) {
-            try {
                 return createViewModel(factory, handle);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
         }
         throw new IllegalStateException("Unknown model class " + modelClass);
     }
@@ -50,11 +46,15 @@ public class SavedStateViewModelFactory extends AbstractSavedStateVMFactory {
     @SuppressWarnings("unchecked")
     @NonNull
     private <T extends ViewModel> T createViewModel(@NonNull AbstractViewModelFactory factory, @NonNull SavedStateHandle handle) {
-        if (factory instanceof ViewModelSavedStateFactory) {
-            return (T) ((ViewModelSavedStateFactory) factory).create(handle);
-        }
-        if (factory instanceof ViewModelBasicFactory) {
-            return (T) ((ViewModelBasicFactory) factory).create();
+        try {
+            if (factory instanceof ViewModelSavedStateFactory) {
+                return (T) ((ViewModelSavedStateFactory) factory).create(handle);
+            }
+            if (factory instanceof ViewModelBasicFactory) {
+                return (T) ((ViewModelBasicFactory) factory).create();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         throw new IllegalStateException("Invalid Factory Type " + factory.getClass());
     }
