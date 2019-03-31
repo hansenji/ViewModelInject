@@ -8,6 +8,8 @@ ViewModelInject supports [Dagger2](https://google.github.io/dagger/) and [SavedS
 Usage
 -----
 
+#### ViewModel
+
 ```java
 class MyViewModel extends ViewModel {
     @ViewModelInject
@@ -31,6 +33,8 @@ public final class MyViewModel_AssistedFactory implements ViewModelSavedStateFac
 }
 ```
 
+#### Module
+
 In order to allow Dagger to use the generated factory, define an assisted dagger module anywhere in 
 the same gradle module:
 
@@ -41,6 +45,37 @@ abstract class VMModule {}
 ``` 
 
 The library will generate the `ViewModelInject_VMModule` for us.
+
+#### Factory
+
+Inside your Activity or Fragment inject one of the following factories:
+
+If you are **not** using a `SavedStateHandle` inject the `ViewModelFactory`
+```java
+@Inject ViewModelFactory viewModelFactory;
+
+public void onCreate(@Nullable savedInstanceState: Bunlde) {
+    super.onCreate(savedInstanceState);
+    MyViewModel viewModel = ViewModelProviders.of(this, viewModelFactory)
+                                .get(MainViewModel.class);
+    // ...
+}
+```
+
+If you are using a `SavedStateHandle` inject the `SavedStateViewModelFactory.Factory`
+```java
+@Inject SavedStateViewModelFactory.Factory viewModelFactoryFactory;
+
+public void onCreate(@Nullable savedInstanceState: Bunlde) {
+    super.onCreate(savedInstanceState);
+    MyViewModel viewModel = ViewModelProviders.of(this, viewModelFactoryFactory.create(this, intent.getExtras()))
+                                .get(MainViewModel.class);
+    // ...
+}
+```
+
+The `SavedStateViewModelFactory` handles both `ViewModels` with and without a `SavedStateHandle`. 
+If you are using SavedStateHandles anywhere in your project it is recommended to always use the `SavedStateViewModelFactory`
 
 Download
 --------
