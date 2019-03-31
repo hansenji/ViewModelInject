@@ -13,7 +13,7 @@ buildscript {
             'kotlin'                 : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}",
             'javaPoet'               : 'com.squareup:javapoet:1.11.1',
             'guava'                  : 'com.google.guava:guava:26.0-jre',
-            'guavaAndroid'          : 'com.google.guava:guava:27.1-android',
+            'guavaAndroid'           : 'com.google.guava:guava:27.1-android',
             'compileTesting'         : 'com.google.testing.compile:compile-testing:0.15',
             'robolectric'            : 'org.robolectric:robolectric:4.0-alpha-3',
             'inject'                 : 'javax.inject:javax.inject:1',

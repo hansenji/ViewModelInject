@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertAbout
 import com.google.testing.compile.JavaFileObjects
 import com.google.testing.compile.JavaSourceSubjectFactory.javaSource
 import com.google.testing.compile.JavaSourcesSubjectFactory.javaSources
-import org.junit.jupiter.api.Test
+import org.junit.Test
 
 private const val GENERATED_TYPE = "javax.annotation.Generated" // TODO vary once JDK 9 works.
 private const val GENERATED_ANNOTATION = """
@@ -91,7 +91,7 @@ class ViewModelInjectProcessorTest {
                 @Binds
                 @IntoMap
                 @ClassKey(TestViewModel.class)
-                abstract AbstractViewModelFactory<TestViewModel> bind_test_TestViewModel(TestViewModel_AssistedFactory factory);
+                abstract AbstractViewModelFactory bind_test_TestViewModel(TestViewModel_AssistedFactory factory);
             }
         """
         )
@@ -153,7 +153,7 @@ class ViewModelInjectProcessorTest {
                 @Binds
                 @IntoMap
                 @ClassKey(TestViewModel.class)
-                abstract AbstractViewModelFactory<TestViewModel> bind_test_TestViewModel(TestViewModel_AssistedFactory factory);
+                abstract AbstractViewModelFactory bind_test_TestViewModel(TestViewModel_AssistedFactory factory);
             }
         """
         )
@@ -243,7 +243,7 @@ class ViewModelInjectProcessorTest {
                 @Binds
                 @IntoMap
                 @ClassKey(Outer.TestViewModel.class)
-                abstract AbstractViewModelFactory<Outer.TestViewModel> bind_test_Outer${'$'}TestViewModel(Outer${'$'}TestViewModel_AssistedFactory factory);
+                abstract AbstractViewModelFactory bind_test_Outer${'$'}TestViewModel(Outer${'$'}TestViewModel_AssistedFactory factory);
             }
         """
         )
@@ -333,7 +333,7 @@ class ViewModelInjectProcessorTest {
                 @Binds
                 @IntoMap
                 @ClassKey(TestViewModel.class)
-                abstract AbstractViewModelFactory<TestViewModel> bind_test_TestViewModel(TestViewModel_AssistedFactory factory);
+                abstract AbstractViewModelFactory bind_test_TestViewModel(TestViewModel_AssistedFactory factory);
             }
         """
         )
@@ -396,7 +396,7 @@ class ViewModelInjectProcessorTest {
                 @Binds
                 @IntoMap
                 @ClassKey(TestViewModel.class)
-                abstract AbstractViewModelFactory<TestViewModel> bind_test_TestViewModel(TestViewModel_AssistedFactory factory);
+                abstract AbstractViewModelFactory bind_test_TestViewModel(TestViewModel_AssistedFactory factory);
             }
         """
         )
@@ -488,7 +488,7 @@ class ViewModelInjectProcessorTest {
                 @Binds
                 @IntoMap
                 @ClassKey(Outer.TestViewModel.class)
-                abstract AbstractViewModelFactory<Outer.TestViewModel> bind_test_Outer${'$'}TestViewModel(Outer${'$'}TestViewModel_AssistedFactory factory);
+                abstract AbstractViewModelFactory bind_test_Outer${'$'}TestViewModel(Outer${'$'}TestViewModel_AssistedFactory factory);
             }
         """
         )
@@ -771,326 +771,257 @@ class ViewModelInjectProcessorTest {
             .generatesSources(expectedFactory1, expectedFactory2)
     }
 
-    // TODO: 3/29/19 IMPLEMENT TESTS
-//    @Test fun constructorMissingAssistedParametersFails() {
-//        val inputView = JavaFileObjects.forSourceString("test.TestView", """
-//      package test;
-//
-//      import android.view.View;
-//      import com.squareup.inject.inflation.InflationInject;
-//
-//      class TestView extends View {
-//        @InflationInject
-//        TestView(Long foo) {
-//          super(null);
-//        }
-//      }
-//    """)
-//
-//        assertAbout(javaSource())
-//            .that(inputView)
-//            .processedWith(InflationInjectProcessor())
-//            .failsToCompile()
-//            .withErrorContaining("""
-//          Inflation injection requires Context and AttributeSet @Assisted parameters.
-//              Found:
-//                []
-//              Expected:
-//                [android.content.Context context, android.util.AttributeSet attrs]
-//          """.trimIndent())
-//            .`in`(inputView).onLine(9)
-//    }
-//
-//    @Test fun constructorExtraAssistedParameterFails() {
-//        val inputView = JavaFileObjects.forSourceString("test.TestView", """
-//      package test;
-//
-//      import android.content.Context;
-//      import android.util.AttributeSet;
-//      import android.view.View;
-//      import com.squareup.inject.assisted.Assisted;
-//      import com.squareup.inject.inflation.InflationInject;
-//
-//      class TestView extends View {
-//        @InflationInject
-//        TestView(@Assisted Context context, @Assisted AttributeSet attrs, @Assisted String hey, Long foo) {
-//          super(context, attrs);
-//        }
-//      }
-//    """)
-//
-//        assertAbout(javaSource())
-//            .that(inputView)
-//            .processedWith(InflationInjectProcessor())
-//            .failsToCompile()
-//            .withErrorContaining("""
-//          Inflation injection requires Context and AttributeSet @Assisted parameters.
-//              Found:
-//                [android.content.Context context, android.util.AttributeSet attrs, java.lang.String hey]
-//              Expected:
-//                [android.content.Context context, android.util.AttributeSet attrs]
-//          """.trimIndent())
-//            .`in`(inputView).onLine(12)
-//    }
-//
-//    @Test fun constructorMissingContextFails() {
-//        val inputView = JavaFileObjects.forSourceString("test.TestView", """
-//      package test;
-//
-//      import android.util.AttributeSet;
-//      import android.view.View;
-//      import com.squareup.inject.assisted.Assisted;
-//      import com.squareup.inject.inflation.InflationInject;
-//
-//      class TestView extends View {
-//        @InflationInject
-//        TestView(@Assisted AttributeSet attrs, Long foo) {
-//          super(null, attrs);
-//        }
-//      }
-//    """)
-//
-//        assertAbout(javaSource())
-//            .that(inputView)
-//            .processedWith(InflationInjectProcessor())
-//            .failsToCompile()
-//            .withErrorContaining("""
-//          Inflation injection requires Context and AttributeSet @Assisted parameters.
-//              Found:
-//                [android.util.AttributeSet attrs]
-//              Expected:
-//                [android.content.Context context, android.util.AttributeSet attrs]
-//          """.trimIndent())
-//            .`in`(inputView).onLine(11)
-//    }
-//
-//    @Test fun constructorMissingAttributeSetFails() {
-//        val inputView = JavaFileObjects.forSourceString("test.TestView", """
-//      package test;
-//
-//      import android.content.Context;
-//      import android.view.View;
-//      import com.squareup.inject.assisted.Assisted;
-//      import com.squareup.inject.inflation.InflationInject;
-//
-//      class TestView extends View {
-//        @InflationInject
-//        TestView(@Assisted Context context, Long foo) {
-//          super(context, null);
-//        }
-//      }
-//    """)
-//
-//        assertAbout(javaSource())
-//            .that(inputView)
-//            .processedWith(InflationInjectProcessor())
-//            .failsToCompile()
-//            .withErrorContaining("""
-//          Inflation injection requires Context and AttributeSet @Assisted parameters.
-//              Found:
-//                [android.content.Context context]
-//              Expected:
-//                [android.content.Context context, android.util.AttributeSet attrs]
-//          """.trimIndent())
-//            .`in`(inputView).onLine(11)
-//    }
-//
-//    @Test fun constructorMissingProvidedParametersWarns() {
-//        val inputView = JavaFileObjects.forSourceString("test.TestView", """
-//      package test;
-//
-//      import android.content.Context;
-//      import android.util.AttributeSet;
-//      import android.view.View;
-//      import com.squareup.inject.assisted.Assisted;
-//      import com.squareup.inject.inflation.InflationInject;
-//
-//      class TestView extends View {
-//        @InflationInject
-//        TestView(@Assisted Context context, @Assisted AttributeSet attrs) {
-//          super(context, attrs);
-//        }
-//      }
-//    """)
-//
-//        assertAbout(javaSource())
-//            .that(inputView)
-//            .processedWith(InflationInjectProcessor())
-//            .compilesWithoutError()
-//            .withWarningContaining("Inflation injection requires at least one non-@Assisted parameter.")
-//            .`in`(inputView).onLine(12)
-//        // .and().generatesNoFiles()
-//    }
-//
-//    @Test fun privateConstructorFails() {
-//        val inputView = JavaFileObjects.forSourceString("test.TestView", """
-//      package test;
-//
-//      import android.view.View;
-//      import com.squareup.inject.assisted.Assisted;
-//      import com.squareup.inject.inflation.InflationInject;
-//
-//      class TestView extends View {
-//        @InflationInject
-//        private TestView(@Assisted Context context, @Assisted AttributeSet attrs, Long foo) {
-//          super(context, attrs);
-//        }
-//      }
-//    """)
-//
-//        assertAbout(javaSource())
-//            .that(inputView)
-//            .processedWith(InflationInjectProcessor())
-//            .failsToCompile()
-//            .withErrorContaining("@InflationInject constructor must not be private.")
-//            .`in`(inputView).onLine(10)
-//    }
-//
-//    @Test fun nestedPrivateTypeFails() {
-//        val inputView = JavaFileObjects.forSourceString("test.TestView", """
-//      package test;
-//
-//      import android.view.View;
-//      import com.squareup.inject.assisted.Assisted;
-//      import com.squareup.inject.inflation.InflationInject;
-//
-//      class Outer {
-//        private static class TestView extends View {
-//          @InflationInject
-//          TestView(@Assisted Context context, @Assisted AttributeSet attrs, Long foo) {
-//            super(context, attrs);
-//          }
-//        }
-//      }
-//    """)
-//
-//        assertAbout(javaSource())
-//            .that(inputView)
-//            .processedWith(InflationInjectProcessor())
-//            .failsToCompile()
-//            .withErrorContaining("@InflationInject-using types must not be private")
-//            .`in`(inputView).onLine(9)
-//    }
-//
-//    @Test fun nestedNonStaticFails() {
-//        val inputView = JavaFileObjects.forSourceString("test.TestView", """
-//      package test;
-//
-//      import android.view.View;
-//      import com.squareup.inject.assisted.Assisted;
-//      import com.squareup.inject.inflation.InflationInject;
-//
-//      class Outer {
-//        class TestView extends View {
-//          @InflationInject
-//          TestView(@Assisted Context context, @Assisted AttributeSet attrs, Long foo) {
-//            super(context, attrs);
-//          }
-//        }
-//      }
-//    """)
-//
-//        assertAbout(javaSource())
-//            .that(inputView)
-//            .processedWith(InflationInjectProcessor())
-//            .failsToCompile()
-//            .withErrorContaining("Nested @InflationInject-using types must be static")
-//            .`in`(inputView).onLine(9)
-//    }
-//
-//    @Test fun multipleInflationInjectConstructorsFails() {
-//        val inputView = JavaFileObjects.forSourceString("test.TestView", """
-//      package test;
-//
-//      import android.view.View;
-//      import com.squareup.inject.assisted.Assisted;
-//      import com.squareup.inject.inflation.InflationInject;
-//
-//      class TestView extends View {
-//        @InflationInject
-//        TestView(@Assisted Context context, @Assisted AttributeSet attrs, Long foo) {
-//          super(context, attrs);
-//        }
-//
-//        @InflationInject
-//        TestView(@Assisted Context context, @Assisted AttributeSet attrs, String foo) {
-//          super(context, attrs);
-//        }
-//      }
-//    """)
-//
-//        assertAbout(javaSource())
-//            .that(inputView)
-//            .processedWith(InflationInjectProcessor())
-//            .failsToCompile()
-//            .withErrorContaining("Multiple @InflationInject-annotated constructors found.")
-//            .`in`(inputView).onLine(8)
-//    }
-//
-//    @Test fun moduleWithoutModuleAnnotationFails() {
-//        val moduleOne = JavaFileObjects.forSourceString("test.OneModule", """
-//      package test;
-//
-//      import com.squareup.inject.inflation.InflationModule;
-//
-//      @InflationModule
-//      abstract class OneModule {}
-//    """)
-//
-//        assertAbout(javaSource())
-//            .that(moduleOne)
-//            .processedWith(InflationInjectProcessor())
-//            .failsToCompile()
-//            .withErrorContaining("@InflationModule must also be annotated as a Dagger @Module")
-//            .`in`(moduleOne).onLine(7)
-//    }
-//
-//    @Test fun moduleWithNoIncludesFails() {
-//        val moduleOne = JavaFileObjects.forSourceString("test.OneModule", """
-//      package test;
-//
-//      import com.squareup.inject.inflation.InflationModule;
-//      import dagger.Module;
-//
-//      @InflationModule
-//      @Module
-//      abstract class OneModule {}
-//    """)
-//
-//        assertAbout(javaSource())
-//            .that(moduleOne)
-//            .processedWith(InflationInjectProcessor())
-//            .failsToCompile()
-//            .withErrorContaining("@InflationModule's @Module must include InflationInject_OneModule")
-//            .`in`(moduleOne).onLine(9)
-//    }
-//
-//    @Test fun moduleWithoutIncludeFails() {
-//        val moduleOne = JavaFileObjects.forSourceString("test.OneModule", """
-//      package test;
-//
-//      import com.squareup.inject.inflation.InflationModule;
-//      import dagger.Module;
-//
-//      @InflationModule
-//      @Module(includes = TwoModule.class)
-//      abstract class OneModule {}
-//
-//      @Module
-//      abstract class TwoModule {}
-//    """)
-//
-//        assertAbout(javaSource())
-//            .that(moduleOne)
-//            .processedWith(InflationInjectProcessor())
-//            .failsToCompile()
-//            .withErrorContaining("@InflationModule's @Module must include InflationInject_OneModule")
-//            .`in`(moduleOne).onLine(9)
-//    }
+    @Test
+    fun constructorExtraAssistedParameterFailsTest() {
+        val inputViewModel = JavaFileObjects.forSourceString(
+            "test.TestViewModel", """
+            package test;
+
+            import androidx.lifecycle.SavedStateHandle;
+            import androidx.lifecycle.ViewModel;
+            import com.squareup.inject.assisted.Assisted;
+            import com.vikingsen.inject.viewmodel.ViewModelInject;
+
+            class TestViewModel extends ViewModel {
+                @ViewModelInject
+                TestViewModel(Long foo, @Assisted SavedStateHandle savedStateHandle, @Assisted String hey) {
+                }
+            }
+        """
+        )
+
+        assertAbout(javaSource())
+            .that(inputViewModel)
+            .processedWith(ViewModelInjectProcessor())
+            .failsToCompile()
+            .withErrorContaining(
+                """
+          ViewModel injection only allows up to 1 @Assisted parameter of type SavedStateHandle.
+              Found:
+                [androidx.lifecycle.SavedStateHandle savedStateHandle, java.lang.String hey]
+              Expected:
+                [androidx.lifecycle.SavedStateHandle savedStateHandle]
+          """.trimIndent()
+            )
+            .`in`(inputViewModel).onLine(11)
+    }
+
+    @Test
+    fun constructorMissingProvidedParametersWarnsTest() {
+        val inputViewModel = JavaFileObjects.forSourceString(
+            "test.TestViewModel", """
+            package test;
+
+            import androidx.lifecycle.ViewModel;
+            import com.squareup.inject.assisted.Assisted;
+            import com.vikingsen.inject.viewmodel.ViewModelInject;
+
+            class TestViewModel extends ViewModel {
+                @ViewModelInject
+                TestViewModel() {
+                }
+            }
+        """
+        )
+
+        assertAbout(javaSource())
+            .that(inputViewModel)
+            .processedWith(ViewModelInjectProcessor())
+            .compilesWithoutError()
+            .withWarningContaining("ViewModel injections requires at least one non-@Assisted parameter.")
+            .`in`(inputViewModel).onLine(10)
+        // .and().generatesNoFiles()
+    }
+
+    @Test
+    fun privateConstructorFailsTest() {
+        val inputViewModel = JavaFileObjects.forSourceString(
+            "test.TestViewModel", """
+            package test;
+
+            import androidx.lifecycle.ViewModel;
+            import com.squareup.inject.assisted.Assisted;
+            import com.vikingsen.inject.viewmodel.ViewModelInject;
+
+            class TestViewModel extends ViewModel {
+                @ViewModelInject
+                private TestViewModel(Long foo) {
+                }
+            }
+        """
+        )
+
+        assertAbout(javaSource())
+            .that(inputViewModel)
+            .processedWith(ViewModelInjectProcessor())
+            .failsToCompile()
+            .withErrorContaining("@ViewModelInject constructor must not be private.")
+            .`in`(inputViewModel).onLine(10)
+    }
+
+    @Test
+    fun nestedPrivateTypeFailsTest() {
+        val inputViewModel = JavaFileObjects.forSourceString(
+            "test.TestViewModel", """
+            package test;
+
+            import androidx.lifecycle.ViewModel;
+            import com.squareup.inject.assisted.Assisted;
+            import com.vikingsen.inject.viewmodel.ViewModelInject;
+
+            class Outer {
+                private static class TestViewModel extends ViewModel {
+                    @ViewModelInject
+                    TestViewModel(Long foo) {
+                    }
+                }
+            }
+        """
+        )
+
+        assertAbout(javaSource())
+            .that(inputViewModel)
+            .processedWith(ViewModelInjectProcessor())
+            .failsToCompile()
+            .withErrorContaining("@ViewModelInject-using types must not be private")
+            .`in`(inputViewModel).onLine(9)
+    }
+
+    @Test
+    fun nestedNonStaticFailsTest() {
+        val inputViewModel = JavaFileObjects.forSourceString(
+            "test.TestViewModel", """
+            package test;
+
+            import androidx.lifecycle.ViewModel;
+            import com.squareup.inject.assisted.Assisted;
+            import com.vikingsen.inject.viewmodel.ViewModelInject;
+
+            class Outer {
+                 class TestViewModel extends ViewModel {
+                    @ViewModelInject
+                    TestViewModel(Long foo) {
+                    }
+                }
+            }
+        """
+        )
+
+        assertAbout(javaSource())
+            .that(inputViewModel)
+            .processedWith(ViewModelInjectProcessor())
+            .failsToCompile()
+            .withErrorContaining("Nested @ViewModelInject-using types must be static")
+            .`in`(inputViewModel).onLine(9)
+    }
+
+    @Test
+    fun multipleInflationInjectConstructorsFailsTest() {
+        val inputViewModel = JavaFileObjects.forSourceString(
+            "test.TestViewModel", """
+            package test;
+
+            import androidx.lifecycle.ViewModel;
+            import com.squareup.inject.assisted.Assisted;
+            import com.vikingsen.inject.viewmodel.ViewModelInject;
+
+            class TestViewModel extends ViewModel {
+                @ViewModelInject
+                TestViewModel(Long foo) {
+                }
+
+                @ViewModelInject
+                TestViewModel(String foo) {
+                }
+            }
+        """
+        )
+
+
+        assertAbout(javaSource())
+            .that(inputViewModel)
+            .processedWith(ViewModelInjectProcessor())
+            .failsToCompile()
+            .withErrorContaining("Multiple @ViewModelInject-annotated constructors found.")
+            .`in`(inputViewModel).onLine(8)
+    }
+
+    @Test
+    fun moduleWithoutModuleAnnotationFailsTest() {
+        val inputModule = JavaFileObjects.forSourceString(
+            "test.TestModule", """
+            package test;
+
+            import com.vikingsen.inject.viewmodel.ViewModelModule;
+            import dagger.Module;
+
+            @ViewModelModule
+            abstract class TestModule {}
+        """
+        )
+
+
+        assertAbout(javaSource())
+            .that(inputModule)
+            .processedWith(ViewModelInjectProcessor())
+            .failsToCompile()
+            .withErrorContaining("@ViewModelModule must also be annotated as a Dagger @Module")
+            .`in`(inputModule).onLine(8)
+    }
+
+    @Test
+    fun moduleWithNoIncludesFailsTest() {
+        val inputModule = JavaFileObjects.forSourceString(
+            "test.TestModule", """
+            package test;
+
+            import com.vikingsen.inject.viewmodel.ViewModelModule;
+            import dagger.Module;
+
+            @ViewModelModule
+            @Module
+            abstract class TestModule {}
+        """
+        )
+
+        assertAbout(javaSource())
+            .that(inputModule)
+            .processedWith(ViewModelInjectProcessor())
+            .failsToCompile()
+            .withErrorContaining("@ViewModelModule's @Module must include ViewModelInject_TestModule")
+            .`in`(inputModule).onLine(9)
+    }
+
+    @Test
+    fun moduleWithoutIncludeFailsTest() {
+        val inputModule = JavaFileObjects.forSourceString(
+            "test.TestModule", """
+            package test;
+
+            import com.vikingsen.inject.viewmodel.ViewModelModule;
+            import dagger.Module;
+
+            @ViewModelModule
+            @Module(includes = TwoModule.class)
+            abstract class TestModule {}
+
+            @Module
+            abstract class TwoModule {}
+        """
+        )
+
+        assertAbout(javaSource())
+            .that(inputModule)
+            .processedWith(ViewModelInjectProcessor())
+            .failsToCompile()
+            .withErrorContaining("@ViewModelModule's @Module must include ViewModelInject_TestModule")
+            .`in`(inputModule).onLine(9)
+    }
 
     @Test
     fun multipleModulesFailsTest() {
-        val moduleOne = JavaFileObjects.forSourceString("test.OneModule", """
+        val moduleOne = JavaFileObjects.forSourceString(
+            "test.OneModule", """
       package test;
 
       import com.vikingsen.inject.viewmodel.ViewModelModule;
@@ -1099,8 +1030,10 @@ class ViewModelInjectProcessorTest {
       @ViewModelModule
       @Module(includes = ViewModelInject_OneModule.class)
       abstract class OneModule {}
-    """)
-        val moduleTwo = JavaFileObjects.forSourceString("test.TwoModule", """
+    """
+        )
+        val moduleTwo = JavaFileObjects.forSourceString(
+            "test.TwoModule", """
       package test;
 
       import com.vikingsen.inject.viewmodel.ViewModelModule;
@@ -1109,7 +1042,8 @@ class ViewModelInjectProcessorTest {
       @ViewModelModule
       @Module(includes = ViewModelInject_TwoModule.class)
       abstract class TwoModule {}
-    """)
+    """
+        )
 
         assertAbout(javaSources())
             .that(listOf(moduleOne, moduleTwo))

@@ -23,13 +23,9 @@ dependencies {
     testImplementation deps.truth
     testImplementation deps.compileTesting
     testImplementation deps.dagger
-    testImplementation deps.guava
     testImplementation deps.guavaAndroid
     testImplementation files(Jvm.current().getToolsJar())
     testCompileOnly project(':viewmodel-inject-stubs')
-
-
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.1'
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
