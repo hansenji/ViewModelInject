@@ -32,4 +32,4 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.1'
 }
 
-//kapt.includeCompileClasspath = false
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

@@ -39,3 +39,5 @@ dependencies {
     testImplementation deps.robolectric
     testImplementation deps.android
 }
+
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
