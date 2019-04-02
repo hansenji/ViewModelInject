@@ -51,7 +51,7 @@ class ViewModelInjectProcessor : AbstractProcessor() {
     private lateinit var types: Types
     private lateinit var elements: Elements
     private lateinit var viewModelType: TypeMirror
-    private lateinit var savedStateHandle: TypeMirror
+    private var savedStateHandle: TypeMirror? = null
 
     private var userModule: String? = null
 
@@ -68,7 +68,7 @@ class ViewModelInjectProcessor : AbstractProcessor() {
         types = env.typeUtils
         elements = env.elementUtils
         viewModelType = elements.getTypeElement("androidx.lifecycle.ViewModel").asType()
-        savedStateHandle = elements.getTypeElement("androidx.lifecycle.SavedStateHandle").asType()
+        savedStateHandle = elements.getTypeElement("androidx.lifecycle.SavedStateHandle")?.asType()
     }
 
     override fun process(annotations: Set<TypeElement>, roundEnv: RoundEnvironment): Boolean {
@@ -204,6 +204,9 @@ class ViewModelInjectProcessor : AbstractProcessor() {
             $SAVED_STATE_FACTORY_KEY
         """.trimIndent(), targetConstructor
             )
+            valid = false
+        } else if (assistedKeys.isNotEmpty() && savedStateHandle == null) {
+            error("SavedStateHandle is missing from the classpath")
             valid = false
         }
         if (providedRequests.isEmpty()) {

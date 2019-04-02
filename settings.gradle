@@ -1,2 +1,2 @@
-include ':viewmodel-inject-sample', ':viewmodel-inject', ':viewmodel-inject-processor', ':viewmodel-inject-annotations', ':viewmodel-inject-stubs'
+include ':viewmodel-inject-saved-state', ':viewmodel-inject', ':viewmodel-inject-processor', ':viewmodel-inject-annotations', ':viewmodel-inject-stubs', ':viewmodel-inject-no-saved-state'
 rootProject.name='ViewModelInject'

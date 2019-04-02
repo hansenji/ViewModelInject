@@ -5,6 +5,9 @@ This library is based on and depends heavily on [Assisted Inject](https://github
 
 ViewModelInject supports [Dagger2](https://google.github.io/dagger/) and [SavedStateHandle](https://developer.android.com/topic/libraries/architecture/viewmodel-savedstate)
 
+#### NOTE 
+This is using alpha versions of the Androidx/JetPack libraries. Use at your own risk.
+
 Usage
 -----
 
@@ -14,22 +17,6 @@ Usage
 class MyViewModel extends ViewModel {
     @ViewModelInject
     MyViewModel(Long foo, @Assisted SavedStateHandle savedStateHandle) {}
-}
-```
-
-this will generate the following:
-
-```java
-public final class MyViewModel_AssistedFactory implements ViewModelSavedStateFactory<MyViewModel> {
-    private final Provider<Long> foo;
-
-    @Inject public MyViewModel_AssistedFactory(Provider<Long> foo) {
-        this.foo = foo;
-    }
-
-    @Override public MyViewModel create(SavedStateHandle savedStateHandle) {
-        return new MyViewModel(foo.get(), savedStateHandle);
-    }
 }
 ```
 
@@ -87,7 +74,7 @@ repositories {
 }
 ```
 ```groovy
-compileOnly 'com.vikingsen.inject:viewmodel-inject:0.1.0-SNAPSHOT'
+implementation 'com.vikingsen.inject:viewmodel-inject:0.1.0-SNAPSHOT'
 annotationProcessor 'com.vikingsen.inject:viewmodel-inject-processor:0.1.0-SNAPSHOT'
 ```
 
