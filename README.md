@@ -13,11 +13,19 @@ Usage
 
 #### ViewModel
 
+Java
 ```java
 class MyViewModel extends ViewModel {
     @ViewModelInject
     MyViewModel(Long foo, @Assisted SavedStateHandle savedStateHandle) {}
 }
+```
+Kotlin
+```kotlin
+class MyViewModel
+@ViewModelInject constructor(
+    foo: Long, @Assisted savedStateHandle: SavedStateHandle
+): ViewModel() {}
 ```
 
 #### Module
@@ -25,10 +33,17 @@ class MyViewModel extends ViewModel {
 In order to allow Dagger to use the generated factory, define an assisted dagger module anywhere in 
 the same gradle module:
 
+Java
 ```java
 @ViewModelModule
 @Module(includes = ViewModelInject_VMModule.class)
 abstract class VMModule {}
+``` 
+Kotlin
+```kotlin
+@ViewModelModule
+@Module(includes = [ViewModelInject_VMModule::class])
+abstract class VMModule
 ``` 
 
 The library will generate the `ViewModelInject_VMModule` for us.
@@ -38,25 +53,53 @@ The library will generate the `ViewModelInject_VMModule` for us.
 Inside your Activity or Fragment inject one of the following factories:
 
 If you are **not** using a `SavedStateHandle` inject the `ViewModelFactory`
+
+Java
 ```java
 @Inject ViewModelFactory viewModelFactory;
 
-public void onCreate(@Nullable savedInstanceState: Bunlde) {
+public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     MyViewModel viewModel = ViewModelProviders.of(this, viewModelFactory)
                                 .get(MainViewModel.class);
     // ...
 }
 ```
+Kotlin
+```kotlin
+@Inject 
+lateinit var viewModelFactory: ViewModelFactory
+
+public void onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    val viewModel = ViewModelProviders.of(this, viewModelFactory)
+                                .get(MainViewModel::class.java)
+    // ...
+}
+```
 
 If you are using a `SavedStateHandle` inject the `SavedStateViewModelFactory.Factory`
+
+Java
 ```java
 @Inject SavedStateViewModelFactory.Factory viewModelFactoryFactory;
 
-public void onCreate(@Nullable savedInstanceState: Bunlde) {
+fun onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     MyViewModel viewModel = ViewModelProviders.of(this, viewModelFactoryFactory.create(this, intent.getExtras()))
                                 .get(MainViewModel.class);
+    // ...
+}
+```
+Kotlin
+```kotlin
+@Inject
+lateinit var viewModelFactoryFactory: SavedStateViewModelFactory.Factory
+
+fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    val viewModel = ViewModelProviders.of(this, viewModelFactoryFactory.create(this, intent.getExtras()))
+                                .get(MainViewModel::class.java)
     // ...
 }
 ```
@@ -75,7 +118,7 @@ repositories {
 ```
 ```groovy
 implementation 'com.vikingsen.inject:viewmodel-inject:0.1.0-SNAPSHOT'
-annotationProcessor 'com.vikingsen.inject:viewmodel-inject-processor:0.1.0-SNAPSHOT'
+annotationProcessor 'com.vikingsen.inject:viewmodel-inject-processor:0.1.0-SNAPSHOT' // or `kapt` for Kotlin
 ```
 
 License
