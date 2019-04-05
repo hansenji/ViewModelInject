@@ -1,6 +1,7 @@
 package com.vikingsen.inject.viewmodel.processor
 
 import com.google.auto.service.AutoService
+import com.squareup.inject.assisted.processor.AssistedInjection
 import com.squareup.inject.assisted.processor.Key
 import com.squareup.inject.assisted.processor.NamedKey
 import com.squareup.inject.assisted.processor.asDependencyRequest
@@ -20,7 +21,6 @@ import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.ParameterizedTypeName
 import com.vikingsen.inject.viewmodel.ViewModelInject
 import com.vikingsen.inject.viewmodel.ViewModelModule
-import com.vikingsen.inject.viewmodel.processor.internal.AssistedInjection
 import com.vikingsen.inject.viewmodel.processor.internal.createGeneratedAnnotation
 import javax.annotation.processing.AbstractProcessor
 import javax.annotation.processing.Filer

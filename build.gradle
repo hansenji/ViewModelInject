@@ -20,9 +20,9 @@ buildscript {
             'android'                : 'com.google.android:android:4.1.1.4',
             'androidxAnnotations'    : 'androidx.annotation:annotation:1.1.0-alpha02',
             'dexMemberList'          : 'com.jakewharton.dex:dex-member-list:3.2.1',
-            'assistedInject'         : 'com.squareup.inject:assisted-inject-annotations-dagger2:0.3.3',
-            'assistedInjectCompiler' : 'com.squareup.inject:assisted-inject-processor-dagger2:0.3.3',
-            'assistedInjectProcessor': 'com.squareup.inject:assisted-inject-processor:0.3.3',
+            'assistedInject'         : 'com.squareup.inject:assisted-inject-annotations-dagger2:0.4.0',
+            'assistedInjectCompiler' : 'com.squareup.inject:assisted-inject-processor-dagger2:0.4.0',
+            'assistedInjectProcessor': 'com.squareup.inject:assisted-inject-processor:0.4.0',
             'viewModel'              : 'androidx.lifecycle:lifecycle-viewmodel:2.1.0-alpha03',
             'viewModelSavedState'    : 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-alpha01',
     ]
@@ -33,7 +33,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0-alpha09'
+        classpath 'com.android.tools.build:gradle:3.5.0-alpha10'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
