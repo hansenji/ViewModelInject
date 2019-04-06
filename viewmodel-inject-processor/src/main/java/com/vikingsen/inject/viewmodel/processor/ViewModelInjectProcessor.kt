@@ -211,22 +211,12 @@ class ViewModelInjectProcessor : AbstractProcessor() {
         }
         if (providedRequests.isEmpty()) {
             warn("ViewModel injections requires at least one non-@Assisted parameter.", targetConstructor)
-        } else {
-            val providedDuplicates = providedRequests.groupBy { it.key }.filterValues { it.size > 1 }
-            if (providedDuplicates.isNotEmpty()) {
-                error(
-                    "Duplicate non-@Assisted parameters declared. Forget a qualifier annotation?"
-                            + providedDuplicates.values.flatten().joinToString("\n * ", prefix = "\n * "),
-                    targetConstructor
-                )
-                valid = false
-            }
         }
 
         if (!valid) return null
 
         val targetType = targetType.asType().toTypeName()
-        val generatedAnnotation = createGeneratedAnnotation(elements, "https://github.com/hansenji/ViewModelInject")
+        val generatedAnnotation = createGeneratedAnnotation(elements)
         return if (assistedKeys.isEmpty()) {
             val factory = ParameterizedTypeName.get(BASIC_FACTORY, targetType)
             AssistedInjection(targetType, requests, factory, "create", targetType, emptyList(), generatedAnnotation)
@@ -274,7 +264,7 @@ class ViewModelInjectProcessor : AbstractProcessor() {
         val moduleName = moduleType.toClassName()
         val inflationNames = viewModelTypes.map { it.toClassName() }
         val public = Modifier.PUBLIC in moduleType.modifiers
-        val generatedAnnotation = createGeneratedAnnotation(elements, "https://github.com/hansenji/ViewModelInject")
+        val generatedAnnotation = createGeneratedAnnotation(elements)
         return ViewModelInjectionModule(moduleName, public, inflationNames, generatedAnnotation)
     }
 
