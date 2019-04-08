@@ -4,8 +4,8 @@ buildscript {
     ext.kotlin_version = '1.3.21'
 
     ext.deps = [
-            'dagger'                 : 'com.google.dagger:dagger:2.17',
-            'daggerCompiler'         : 'com.google.dagger:dagger-compiler:2.17',
+            'dagger'                 : 'com.google.dagger:dagger:2.22.1',
+            'daggerCompiler'         : 'com.google.dagger:dagger-compiler:2.22.1',
             'autoService'            : 'com.google.auto.service:auto-service:1.0-rc4',
             'autoCommon'             : 'com.google.auto:auto-common:0.10',
             'junit'                  : 'junit:junit:4.12',
