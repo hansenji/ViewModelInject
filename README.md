@@ -8,6 +8,8 @@ ViewModelInject supports [Dagger2](https://google.github.io/dagger/) and [SavedS
 #### NOTE 
 This is using alpha versions of the Androidx/JetPack libraries. Use at your own risk.
 
+This Library will go 1.0 when ViewModel-SavedState library goes to full release and Assisted Inject goes 1.0.
+
 Usage
 -----
 
@@ -109,16 +111,17 @@ If you are using SavedStateHandles anywhere in your project it is recommended to
 
 Download
 --------
-This library is currently only released as a snapshot.
+```groovy
+implementation 'com.vikingsen.inject:viewmodel-inject:0.1.0-SNAPSHOT'
+annotationProcessor 'com.vikingsen.inject:viewmodel-inject-processor:0.1.0-SNAPSHOT' // or `kapt` for Kotlin
+```
+
+For Snapshots include the following repository:
 ```groovy
 repositories {
     // ...
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
-```
-```groovy
-implementation 'com.vikingsen.inject:viewmodel-inject:0.1.0-SNAPSHOT'
-annotationProcessor 'com.vikingsen.inject:viewmodel-inject-processor:0.1.0-SNAPSHOT' // or `kapt` for Kotlin
 ```
 
 License
