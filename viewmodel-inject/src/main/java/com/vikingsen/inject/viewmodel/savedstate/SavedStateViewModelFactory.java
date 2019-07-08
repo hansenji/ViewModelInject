@@ -11,12 +11,12 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.AbstractSavedStateVMFactory;
+import androidx.lifecycle.AbstractSavedStateViewModelFactory;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 import androidx.savedstate.SavedStateRegistryOwner;
 
-public class SavedStateViewModelFactory extends AbstractSavedStateVMFactory {
+public class SavedStateViewModelFactory extends AbstractSavedStateViewModelFactory {
 
     private final Map<Class<?>, AbstractViewModelFactory> factories;
 
