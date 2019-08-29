@@ -16,8 +16,10 @@ dependencies {
 
     compileOnly deps.autoService
     compileOnly deps.guava
+    compileOnly deps.incap.runtime
     kapt deps.autoService
     kapt deps.guava
+    kapt deps.incap.processor
 
     testImplementation deps.junit
     testImplementation deps.truth
