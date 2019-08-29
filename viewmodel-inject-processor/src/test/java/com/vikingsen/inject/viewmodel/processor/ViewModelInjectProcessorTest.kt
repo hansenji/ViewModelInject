@@ -807,33 +807,6 @@ class ViewModelInjectProcessorTest {
     }
 
     @Test
-    fun constructorMissingProvidedParametersWarnsTest() {
-        val inputViewModel = JavaFileObjects.forSourceString(
-            "test.TestViewModel", """
-            package test;
-
-            import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
-            import com.vikingsen.inject.viewmodel.ViewModelInject;
-
-            class TestViewModel extends ViewModel {
-                @ViewModelInject
-                TestViewModel() {
-                }
-            }
-        """
-        )
-
-        assertAbout(javaSource())
-            .that(inputViewModel)
-            .processedWith(ViewModelInjectProcessor())
-            .compilesWithoutError()
-            .withWarningContaining("ViewModel injections requires at least one non-@Assisted parameter.")
-            .`in`(inputViewModel).onLine(10)
-        // .and().generatesNoFiles()
-    }
-
-    @Test
     fun privateConstructorFailsTest() {
         val inputViewModel = JavaFileObjects.forSourceString(
             "test.TestViewModel", """

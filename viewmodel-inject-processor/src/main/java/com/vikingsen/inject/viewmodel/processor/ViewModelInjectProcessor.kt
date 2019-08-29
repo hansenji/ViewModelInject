@@ -190,13 +190,12 @@ class ViewModelInjectProcessor : AbstractProcessor() {
      * From this [ViewModelInjectElements], parse and validate the semantic information of the
      * elements which is required to generate the factory:
      * - Optional unqualified assisted parameter of SavedStateHandle
-     * - At least one provided parameter and no duplicates
      */
     private fun ViewModelInjectElements.toAssistedInjectionOrNull(): AssistedInjection? {
         var valid = true
 
         val requests = targetConstructor.parameters.map { it.asDependencyRequest() }
-        val (assistedRequests, providedRequests) = requests.partition { it.isAssisted }
+        val assistedRequests = requests.filter { it.isAssisted }
         val assistedKeys = assistedRequests.map { it.namedKey }
         if (assistedKeys.isNotEmpty() && assistedKeys.toSet() != SAVED_STATE_FACTORY_KEY.toSet()) {
             error(
@@ -212,9 +211,6 @@ class ViewModelInjectProcessor : AbstractProcessor() {
         } else if (assistedKeys.isNotEmpty() && savedStateHandle == null) {
             error("SavedStateHandle is missing from the classpath")
             valid = false
-        }
-        if (providedRequests.isEmpty()) {
-            warn("ViewModel injections requires at least one non-@Assisted parameter.", targetConstructor)
         }
 
         if (!valid) return null
