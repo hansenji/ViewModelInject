@@ -16,8 +16,10 @@ dependencies {
 
     compileOnly deps.autoService
     compileOnly deps.guava
+    compileOnly deps.incap.runtime
     kapt deps.autoService
     kapt deps.guava
+    kapt deps.incap.processor
 
     testImplementation deps.junit
     testImplementation deps.truth
@@ -25,7 +27,7 @@ dependencies {
     testImplementation deps.dagger
     testImplementation deps.guavaAndroid
     testImplementation files(Jvm.current().getToolsJar())
-    testCompileOnly project(':viewmodel-inject-stubs')
+    testImplementation project(':viewmodel-inject-stubs')
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

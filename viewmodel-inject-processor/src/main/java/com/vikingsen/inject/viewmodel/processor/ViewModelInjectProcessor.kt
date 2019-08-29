@@ -7,9 +7,9 @@ import com.squareup.inject.assisted.processor.NamedKey
 import com.squareup.inject.assisted.processor.asDependencyRequest
 import com.squareup.inject.assisted.processor.internal.MirrorValue
 import com.squareup.inject.assisted.processor.internal.applyEach
-import com.squareup.inject.assisted.processor.internal.associateWithNotNull
 import com.squareup.inject.assisted.processor.internal.cast
 import com.squareup.inject.assisted.processor.internal.castEach
+import com.squareup.inject.assisted.processor.internal.filterNotNullValues
 import com.squareup.inject.assisted.processor.internal.findElementsAnnotatedWith
 import com.squareup.inject.assisted.processor.internal.getAnnotation
 import com.squareup.inject.assisted.processor.internal.getValue
@@ -22,6 +22,8 @@ import com.squareup.javapoet.ParameterizedTypeName
 import com.vikingsen.inject.viewmodel.ViewModelInject
 import com.vikingsen.inject.viewmodel.ViewModelModule
 import com.vikingsen.inject.viewmodel.processor.internal.createGeneratedAnnotation
+import net.ltgt.gradle.incap.IncrementalAnnotationProcessor
+import net.ltgt.gradle.incap.IncrementalAnnotationProcessorType
 import javax.annotation.processing.AbstractProcessor
 import javax.annotation.processing.Filer
 import javax.annotation.processing.Messager
@@ -43,6 +45,7 @@ import javax.lang.model.util.Types
 import javax.tools.Diagnostic.Kind.ERROR
 import javax.tools.Diagnostic.Kind.WARNING
 
+@IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.ISOLATING)
 @AutoService(Processor::class)
 class ViewModelInjectProcessor : AbstractProcessor() {
 
@@ -76,7 +79,8 @@ class ViewModelInjectProcessor : AbstractProcessor() {
             .mapNotNull { it.toViewModelInjectElementsOrNull() }
 
         viewModelInjectElements
-            .associateWithNotNull { it.toAssistedInjectionOrNull() }
+            .associateWith { it.toAssistedInjectionOrNull() }
+            .filterNotNullValues()
             .forEach { writeViewModelInject(it.key, it.value) }
 
         val viewModelModuleElements = roundEnv.findViewModelModuleTypeElement()
@@ -186,13 +190,12 @@ class ViewModelInjectProcessor : AbstractProcessor() {
      * From this [ViewModelInjectElements], parse and validate the semantic information of the
      * elements which is required to generate the factory:
      * - Optional unqualified assisted parameter of SavedStateHandle
-     * - At least one provided parameter and no duplicates
      */
     private fun ViewModelInjectElements.toAssistedInjectionOrNull(): AssistedInjection? {
         var valid = true
 
         val requests = targetConstructor.parameters.map { it.asDependencyRequest() }
-        val (assistedRequests, providedRequests) = requests.partition { it.isAssisted }
+        val assistedRequests = requests.filter { it.isAssisted }
         val assistedKeys = assistedRequests.map { it.namedKey }
         if (assistedKeys.isNotEmpty() && assistedKeys.toSet() != SAVED_STATE_FACTORY_KEY.toSet()) {
             error(
@@ -208,9 +211,6 @@ class ViewModelInjectProcessor : AbstractProcessor() {
         } else if (assistedKeys.isNotEmpty() && savedStateHandle == null) {
             error("SavedStateHandle is missing from the classpath")
             valid = false
-        }
-        if (providedRequests.isEmpty()) {
-            warn("ViewModel injections requires at least one non-@Assisted parameter.", targetConstructor)
         }
 
         if (!valid) return null
