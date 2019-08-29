@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.3.41'
+    ext.kotlin_version = '1.3.50'
 
     ext.deps = [
             'dagger'                 : 'com.google.dagger:dagger:2.23.2',
@@ -24,8 +24,7 @@ buildscript {
             'assistedInjectCompiler' : 'com.squareup.inject:assisted-inject-processor-dagger2:0.5.0',
             'assistedInjectProcessor': 'com.squareup.inject:assisted-inject-processor:0.5.0',
             'viewModel'              : 'androidx.lifecycle:lifecycle-viewmodel:2.1.0-rc01',
-            'viewModelSavedState'    : 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-alpha02',
-            'work'                   : 'androidx.work:work-runtime:2.0.1',
+            'viewModelSavedState'    : 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-alpha03',
             'incap': [
                     'runtime': "net.ltgt.gradle.incap:incap:0.2",
                     'processor': "net.ltgt.gradle.incap:incap-processor:0.2",
