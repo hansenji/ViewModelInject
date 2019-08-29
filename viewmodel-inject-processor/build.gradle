@@ -27,7 +27,7 @@ dependencies {
     testImplementation deps.dagger
     testImplementation deps.guavaAndroid
     testImplementation files(Jvm.current().getToolsJar())
-    testCompileOnly project(':viewmodel-inject-stubs')
+    testImplementation project(':viewmodel-inject-stubs')
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
