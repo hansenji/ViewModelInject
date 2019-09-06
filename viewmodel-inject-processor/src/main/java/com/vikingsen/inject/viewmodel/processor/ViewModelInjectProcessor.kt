@@ -45,7 +45,7 @@ import javax.lang.model.util.Types
 import javax.tools.Diagnostic.Kind.ERROR
 import javax.tools.Diagnostic.Kind.WARNING
 
-@IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.ISOLATING)
+@IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.AGGREGATING)
 @AutoService(Processor::class)
 class ViewModelInjectProcessor : AbstractProcessor() {
 
