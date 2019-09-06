@@ -1,3 +1,8 @@
+0.3.1-alpha02 (2019-09-06)
+==========================
+* Change incremental annotation processing to Aggregate
+* Updated ViewModel-SavedState-1.0.0-alpha04
+
 0.3.0-alpha01 (2019-08-29)
 ==========================
 * Support incremental annotation processing (Thanks gm-vm)
