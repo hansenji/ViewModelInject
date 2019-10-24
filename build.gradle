@@ -24,7 +24,7 @@ buildscript {
             'assistedInjectCompiler' : 'com.squareup.inject:assisted-inject-processor-dagger2:0.5.0',
             'assistedInjectProcessor': 'com.squareup.inject:assisted-inject-processor:0.5.0',
             'viewModel'              : 'androidx.lifecycle:lifecycle-viewmodel:2.1.0',
-            'viewModelSavedState'    : 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-alpha04',
+            'viewModelSavedState'    : 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-rc01',
             'incap': [
                     'runtime': "net.ltgt.gradle.incap:incap:0.2",
                     'processor': "net.ltgt.gradle.incap:incap-processor:0.2",
@@ -37,7 +37,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:3.5.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
