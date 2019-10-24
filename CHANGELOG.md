@@ -1,3 +1,8 @@
+0.3.2-rc01 (2019-10-24)
+=======================
+* Changed annotation retention policy to `CLASS` to better support incremental annotation processing (Thanks gm-vm)
+* Updated ViewModel-SavedState-1.0.0-rc01
+
 0.3.1-alpha02 (2019-09-06)
 ==========================
 * Change incremental annotation processing to Aggregate
