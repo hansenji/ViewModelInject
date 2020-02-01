@@ -23,8 +23,8 @@ buildscript {
             'assistedInject'         : 'com.squareup.inject:assisted-inject-annotations-dagger2:0.5.2',
             'assistedInjectCompiler' : 'com.squareup.inject:assisted-inject-processor-dagger2:0.5.2',
             'assistedInjectProcessor': 'com.squareup.inject:assisted-inject-processor:0.5.2',
-            'viewModel'              : 'androidx.lifecycle:lifecycle-viewmodel:2.1.0',
-            'viewModelSavedState'    : 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-rc01',
+            'viewModel'              : 'androidx.lifecycle:lifecycle-viewmodel:2.2.0',
+            'viewModelSavedState'    : 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0',
             'incap': [
                     'runtime': "net.ltgt.gradle.incap:incap:0.2",
                     'processor': "net.ltgt.gradle.incap:incap-processor:0.2",
