@@ -1,5 +1,9 @@
 0.3.2 (2020-02-03)
 ==================
+* Really Switch to ViewModel-SavedState-1.0.0 (Thanks gm-vm)
+
+0.3.2 (2020-02-03)
+==================
 * Switch to ViewModel-SavedState-1.0.0 (Thanks gm-vm)
 
 0.3.2-rc01 (2019-10-24)

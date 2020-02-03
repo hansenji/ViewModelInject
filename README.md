@@ -112,8 +112,8 @@ If you are using SavedStateHandles anywhere in your project it is recommended to
 Download
 --------
 ```groovy
-implementation 'com.vikingsen.inject:viewmodel-inject:0.3.2'
-annotationProcessor 'com.vikingsen.inject:viewmodel-inject-processor:0.3.2' // or `kapt` for Kotlin
+implementation 'com.vikingsen.inject:viewmodel-inject:0.3.3'
+annotationProcessor 'com.vikingsen.inject:viewmodel-inject-processor:0.3.3' // or `kapt` for Kotlin
 ```
 
 For Snapshots include the following repository:
