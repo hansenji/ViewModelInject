@@ -1,3 +1,5 @@
+### Deprecated: Use [Hilt](https://dagger.dev/hilt/) and [Androidx Hilt](https://developer.android.com/training/dependency-injection/hilt-jetpack)###
+
 Assisted Injection for Android ViewModels
 =========================================
 
