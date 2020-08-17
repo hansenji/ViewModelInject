@@ -111,6 +111,39 @@ fun onCreate(savedInstanceState: Bundle?) {
 The `SavedStateViewModelFactory` handles both `ViewModels` with and without a `SavedStateHandle`. 
 If you are using SavedStateHandles anywhere in your project it is recommended to always use the `SavedStateViewModelFactory`
 
+For optimal build speed, all the referred `@Injecte`d types should be compiled with the Dagger processor.
+This is also a requirement for incremental annotation processing with `kapt`.
+Given that `SavedStateViewModelFactory.Factory` is an external dependency, you should provide an instance using a `@Provides` method.
+For example, if you use `SavedStateViewModelFactory`:
+
+Java
+```java
+@Module
+public class AppViewModelFactoryFactoryModule {
+    @Provides
+    @Singleton
+    public static SavedStateViewModelFactory.Factory provideViewModelFactoryFactory(
+            Map<Class<?>, AbstractViewModelFactory> factories
+    ) {
+        return new SavedStateViewModelFactory.Factory(factories);
+    }
+}
+```
+
+Kotlin
+```kotlin
+@Module
+object AppViewModelFactoryFactoryModule {
+    @Provides
+    @Singleton
+    fun provideViewModelFactoryFactory(
+            factories: Map<Class<*>, @JvmSuppressWildcards AbstractViewModelFactory>
+    ): SavedStateViewModelFactory.Factory {
+        return SavedStateViewModelFactory.Factory(factories)
+    }
+}
+```
+
 Download
 --------
 ```groovy
