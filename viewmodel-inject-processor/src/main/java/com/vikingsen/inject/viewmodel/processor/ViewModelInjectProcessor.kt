@@ -49,6 +49,7 @@ import javax.tools.Diagnostic.Kind.WARNING
 @AutoService(Processor::class)
 class ViewModelInjectProcessor : AbstractProcessor() {
 
+    private lateinit var sourceVersion: SourceVersion
     private lateinit var messager: Messager
     private lateinit var filer: Filer
     private lateinit var types: Types
@@ -66,6 +67,7 @@ class ViewModelInjectProcessor : AbstractProcessor() {
 
     override fun init(env: ProcessingEnvironment) {
         super.init(env)
+        sourceVersion = env.sourceVersion
         messager = env.messager
         filer = env.filer
         types = env.typeUtils
@@ -216,7 +218,7 @@ class ViewModelInjectProcessor : AbstractProcessor() {
         if (!valid) return null
 
         val targetType = targetType.asType().toTypeName()
-        val generatedAnnotation = createGeneratedAnnotation(elements)
+        val generatedAnnotation = createGeneratedAnnotation(sourceVersion, elements)
         return if (assistedKeys.isEmpty()) {
             val factory = ParameterizedTypeName.get(BASIC_FACTORY, targetType)
             AssistedInjection(targetType, requests, factory, "create", targetType, emptyList(), generatedAnnotation)
@@ -264,7 +266,7 @@ class ViewModelInjectProcessor : AbstractProcessor() {
         val moduleName = moduleType.toClassName()
         val inflationNames = viewModelTypes.map { it.toClassName() }
         val public = Modifier.PUBLIC in moduleType.modifiers
-        val generatedAnnotation = createGeneratedAnnotation(elements)
+        val generatedAnnotation = createGeneratedAnnotation(sourceVersion, elements)
         return ViewModelInjectionModule(moduleName, public, inflationNames, generatedAnnotation)
     }
 
